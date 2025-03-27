@@ -1,0 +1,5 @@
+requests
+aiohttp
+tapo
+renault-api
+python-dotenv
