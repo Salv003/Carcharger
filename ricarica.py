@@ -30,7 +30,7 @@ class EVCharger:
         url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
         payloads = [
             {"chat_id": TELEGRAM_CHAT_ID, "text": message},
-            '''{"chat_id": TELEGRAM_CHAT_ID1, "text": message}''',
+            {"chat_id": TELEGRAM_CHAT_ID1, "text": message},
         ]
         try:
             async with aiohttp.ClientSession() as session:
@@ -115,8 +115,8 @@ class EVCharger:
     async def start_charging(self):
         try:
             client = ApiClient(self.tapo_email, self.tapo_password)
-            plug = await asyncio.to_thread(client.p100, self.smart_plug_ip)
-            await asyncio.to_thread(plug.on)
+            plug = await client.p100(self.smart_plug_ip)
+            await plug.on()
             logger.info("Presa attivata, ricarica avviata.")
             return True
         except Exception as e:
@@ -132,8 +132,8 @@ class EVCharger:
     async def stop_charging(self):
         try:
             client = ApiClient(self.tapo_email, self.tapo_password)
-            plug = await asyncio.to_thread(client.p100, self.smart_plug_ip)
-            await asyncio.to_thread(plug.off)
+            plug = await client.p100(self.smart_plug_ip)
+            await plug.off()
             logger.info("Presa spenta, ricarica terminata.")
             return True
         except Exception as e:
