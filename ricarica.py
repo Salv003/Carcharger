@@ -7,9 +7,9 @@ from tapo import ApiClient
 from renault_api.renault_client import RenaultClient
 from dotenv import load_dotenv
 
-TELEGRAM_BOT_TOKEN = "8135262155:AAFXAIMrIqDFcaYkFIKY4fmszCTEuUQPNZw"
-TELEGRAM_CHAT_ID = "647755647"
-TELEGRAM_CHAT_ID1 = "1041256243"
+TELEGRAM_BOT_TOKEN = ""
+TELEGRAM_CHAT_ID = ""
+TELEGRAM_CHAT_ID1 = ""
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
