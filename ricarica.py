@@ -17,7 +17,7 @@ TELEGRAM_CHAT_ID1 = os.getenv("TELEGRAM_CHAT_ID1")
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
+logging.getLogger("renault_api.kamereon.models").setLevel(logging.ERROR)
 
 class EVCharger:
     def __init__(self):
