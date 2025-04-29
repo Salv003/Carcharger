@@ -3,18 +3,21 @@ import asyncio
 import logging
 import aiohttp
 import time
+import requests
 from tapo import ApiClient
 from renault_api.renault_client import RenaultClient
 from dotenv import load_dotenv
 
-TELEGRAM_BOT_TOKEN = ""
-TELEGRAM_CHAT_ID = ""
-TELEGRAM_CHAT_ID1 = ""
+
+load_dotenv()
+
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+TELEGRAM_CHAT_ID1 = os.getenv("TELEGRAM_CHAT_ID1")
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-load_dotenv()
 
 class EVCharger:
     def __init__(self):
@@ -25,6 +28,7 @@ class EVCharger:
         self.renault_password = os.getenv('RENAULT_PASSWORD')
         if not all([self.tapo_email, self.tapo_password, self.smart_plug_ip, self.renault_email, self.renault_password]):
             raise ValueError("Errore: alcune credenziali non sono state caricate correttamente.")
+        self.last_update_id = None  # Per la gestione dei messaggi Telegram
 
     async def send_telegram_message(self, message):
         url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
@@ -55,7 +59,9 @@ class EVCharger:
                 vin = vehicles.vehicleLinks[0].vin
                 vehicle = await account.get_api_vehicle(vin)
                 battery_status = await vehicle.get_battery_status()
-                return battery_status.batteryLevel
+                battery_level = battery_status.batteryLevel
+                logger.info(f"Livello batteria attuale: {battery_level}%")
+                return battery_level
         except aiohttp.ClientError as e:
             logger.error(f"Errore nel recupero della batteria: {e}")
             return None
@@ -72,12 +78,24 @@ class EVCharger:
                 vin = vehicles.vehicleLinks[0].vin
                 vehicle = await account.get_api_vehicle(vin)
                 plug_status = await vehicle.get_battery_status()
-                is_plugged = plug_status.plugStatus != 1
-                logger.info(f"Stato del cavo: {'Collegato' if is_plugged else 'Scollegato'}")
+                is_plugged = plug_status.plugStatus != 0
+                logger.info(f"Stato del cavo: {'Collegato' if is_plugged else 'Scollegato'} {plug_status.plugStatus}")
                 return is_plugged
         except aiohttp.ClientError as e:
             logger.error(f"Errore nel recupero dello stato del cavo: {e}")
             return False
+
+    async def get_last_update_id(self):
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getUpdates"
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as resp:
+                    data = await resp.json()
+                    if "result" in data and data["result"]:
+                        return data["result"][-1]["update_id"]
+        except Exception as e:
+            logger.error(f"Errore nel recupero dell'ultimo update_id: {e}")
+        return None
 
     async def wait_for_user_response(self, timeout=60):
         url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getUpdates"
@@ -88,28 +106,29 @@ class EVCharger:
                 params = {"offset": last_update_id + 1, "timeout": 10}
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url, params=params) as resp:
-                        response = await resp.json()
-                        if "result" in response and response["result"]:
-                            for update in response["result"]:
+                        data = await resp.json()
+                        if "result" in data and data["result"]:
+                            for update in data["result"]:
                                 if "message" in update and "text" in update["message"]:
                                     last_update_id = update["update_id"]
                                     return update["message"]["text"].strip().lower()
-            except aiohttp.ClientError as e:
+            except Exception as e:
                 logger.error(f"Errore nel recupero del messaggio: {e}")
             await asyncio.sleep(2)
         return None
 
     async def ask_continue_charging(self):
-        await self.send_telegram_message("⚡ La ricarica non è necessaria. Vuoi continuare la ricarica? Rispondi 'sì' o 'no'.")
+        battery_percentage = await self.get_battery_percentage()
+        await self.send_telegram_message(f"⚡ La ricarica non è necessaria. La batteria è al {battery_percentage} %. Si desidera continuare la ricarica? Rispondi 'sì' o 'no'.")
         response = await self.wait_for_user_response()
-        if response == str.casefold("si") or response == str.casefold("sì"):
+        if response in ["sì", "si"]:
             await self.send_telegram_message("✅ Continuo la ricarica.")
             return True
-        elif response == str.casefold("no"):
-            await self.send_telegram_message(" Interrompo la ricarica.")
+        elif response == "no":
+            await self.send_telegram_message("🛑 Ricarica terminata. Si prega di scollegare il veicolo.")
             return False
         else:
-            await self.send_telegram_message("⏳ Tempo scaduto, interrompo la ricarica.")
+            await self.send_telegram_message("⏳ Nessuna risposta valida. Ricarica terminata.")
             return False
 
     async def start_charging(self):
@@ -122,12 +141,6 @@ class EVCharger:
         except Exception as e:
             logger.error(f"Errore di autenticazione Tapo: {e}")
             return False
-        except Exception as e:
-            logger.error(f"Errore Tapo: {e}")
-            return False
-        except Exception as e:
-            logger.error(f"Errore generico nell'accensione della presa: {e}")
-            return False
 
     async def stop_charging(self):
         try:
@@ -137,41 +150,8 @@ class EVCharger:
             logger.info("Presa spenta, ricarica terminata.")
             return True
         except Exception as e:
-            logger.error(f"Errore di autenticazione Tapo: {e}")
+            logger.error(f"Errore nello spegnimento della presa: {e}")
             return False
-        except Exception as e:
-            logger.error(f"Errore Tapo: {e}")
-            return False
-        except Exception as e:
-            logger.error(f"Errore generico nello spegnimento della presa: {e}")
-            return False
-
-    async def run_charging_cycle(self):
-        try:
-            logger.info("Avvio del ciclo di ricarica.")
-            battery_percentage = await self.get_battery_percentage()
-            if battery_percentage is None:
-                logger.error("Impossibile recuperare il livello della batteria. Interruzione del ciclo.")
-                return
-            time_estimate = (80 - battery_percentage) * 612
-            if battery_percentage >= 50 and await self.ask_continue_charging():
-                await self.start_charging()
-                logger.info(f"Ricarica in corso. Batteria attuale: {battery_percentage}%")
-                await self.send_telegram_message(f"Ricarica in corso. Batteria attuale: {battery_percentage}%. Tempo di Ricarica previsto per l'80%: {time_estimate // 60} min")
-                await self.charge_loop(battery_percentage, time_estimate)
-            elif battery_percentage < 50:
-                logger.info(f"Batteria bassa ({battery_percentage}%). Avvio ricarica.")
-                await self.send_telegram_message(f"Batteria bassa ({battery_percentage}%). Avvio ricarica.")
-                if await self.start_charging():
-                    await self.charge_loop(battery_percentage, time_estimate)
-                else :
-                    logger.error("Impossibile avviare la ricarica.")
-            else:
-                logger.info(f"Batteria al {battery_percentage}%, ricarica non necessaria.")
-                await self.stop_charging()
-                await self.send_telegram_message(f"Batteria al {battery_percentage}%, ricarica non necessaria.")
-        except Exception as e:
-            logger.error(f"Errore critico nel ciclo di ricarica: {e}")
 
     async def charge_loop(self, battery_percentage, time_estimate):
         last_battery_percentage = battery_percentage
@@ -180,58 +160,75 @@ class EVCharger:
             if battery_percentage is None:
                 logger.error("Errore nel recupero del livello batteria durante la ricarica.")
                 break
+
             if not await self.get_plug_status():
                 logger.warning("⚠️ Cavo scollegato! Interruzione della ricarica.")
                 await self.send_telegram_message(f"⚠️ Cavo scollegato! Batteria al {battery_percentage}%")
                 await self.stop_charging()
                 break
-            logger.info(f" Batteria: {battery_percentage}%. Tempo stimato per 80%: {time_estimate // 60} min")
-            if abs(battery_percentage - last_battery_percentage) >= 1 or time_estimate < 900:
-                await self.send_telegram_message(f" Batteria: {battery_percentage}%. Tempo stimato per 80%: {time_estimate // 60} min")
+            time_estimate =  (80-battery_percentage)*612                
+            if abs(battery_percentage - last_battery_percentage) >= 10 or time_estimate < 900:
+                logger.info(f"🔋 Batteria: {battery_percentage}% - Tempo stimato per 80%: {time_estimate // 60} min")
+                await self.send_telegram_message(f"🔋 Batteria: {battery_percentage}% - Tempo stimato per 80%: {time_estimate // 60} min")
                 last_battery_percentage = battery_percentage
-            sleep_time = min(900, time_estimate // (80 - battery_percentage))
+
+            # Calcola il prossimo intervallo di attesa: più la batteria si avvicina a 80, più frequenti saranno i controlli
+            sleep_time = min(900, time_estimate // max(1, (80 - battery_percentage)))
             await asyncio.sleep(sleep_time)
         await self.stop_charging()
         logger.info("Livello batteria target raggiunto. Ricarica completata.")
-        await self.send_telegram_message("Livello batteria target raggiunto. Ricarica completata.")
+        await self.send_telegram_message("✅ Livello batteria target raggiunto. Ricarica completata.")
+
+    async def run_charging_cycle(self):
+        logger.info("Avvio del ciclo di ricarica.")
+        battery_percentage = await self.get_battery_percentage()
+        if battery_percentage is None:
+            logger.error("Impossibile recuperare il livello della batteria. Interruzione del ciclo.")
+            return
+
+        time_estimate = (80 - battery_percentage) * 612
+        if battery_percentage >= 50:
+            # Quando la batteria è ≥ 50, chiedi se continuare la ricarica
+            if await self.ask_continue_charging():
+                await self.start_charging()
+                await self.send_telegram_message(f"Ricarica in corso. Batteria attuale: {battery_percentage}% - Tempo stimato per l'80%: {time_estimate // 60} min")
+                await self.charge_loop(battery_percentage, time_estimate)
+            else:
+                
+                await self.stop_charging()
+                await self.send_telegram_message("Si prega di scollegare il veicolo. Attendo 2 ore prima di riprovare.")
+                await asyncio.sleep(7200)  # 2 ore
+        elif battery_percentage < 50:
+            
+            await self.send_telegram_message(f"Batteria bassa ({battery_percentage}%). Avvio ricarica. Per l' 80%: {time_estimate//60} min")
+            if await self.start_charging():
+                await self.charge_loop(battery_percentage, time_estimate)
+            else:
+                logger.error("Impossibile avviare la ricarica.")
+        else:
+            await self.stop_charging()
+            await self.send_telegram_message(f"Batteria al {battery_percentage}%, ricarica non necessaria.")
 
     async def monitor_plug_status(self):
         logger.info("Monitoraggio del cavo di ricarica avviato.")
-        first_run = True
+        
         while True:
             if await self.get_plug_status():
-                logger.info("Cavo collegato! Avvio della ricarica.")
-                if first_run:
-                    await self.send_telegram_message("⚡ Cavo collegato! Controllo lo stato della ricarica...")
-                    first_run = False
+                logger.info("Cavo collegato!")
+                await self.send_telegram_message("⚡ Cavo collegato! Controllo lo stato della ricarica...")
                 await self.run_charging_cycle()
             else:
                 logger.warning("⚠️ Cavo scollegato!")
-                first_run = True
-            await asyncio.sleep(900)
-
-    async def get_last_update_id(self):
-        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getUpdates"
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url) as response:
-                    response.raise_for_status()
-                    data = await response.json()
-                    if "result" in data and data["result"]:
-                        return data["result"][-1]["update_id"]
-        except aiohttp.ClientError as e:
-            logger.error(f"Errore nel recupero dell'ultimo update_id: {e}")
-        except Exception as e:
-            logger.error(f"Errore generico nel recupero dell'ultimo update_id: {e}")
-        return None
-
-async def main():
-    charger = EVCharger()
-    await charger.monitor_plug_status()
+            await asyncio.sleep(900)  # Controllo ogni 15 minuti
 
 if __name__ == "__main__":
+    async def main():
+        charger = EVCharger()
+        await charger.monitor_plug_status()
+        
     try:
-        if os.name == "nt":
+        import sys
+        if sys.platform.startswith("win"):
             asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
         asyncio.run(main())
     except Exception as e:
