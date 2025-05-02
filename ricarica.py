@@ -19,6 +19,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 logging.getLogger("renault_api.kamereon.models").setLevel(logging.ERROR)
 
+
 class EVCharger:
     def __init__(self):
         self.tapo_email = os.getenv('TAPO_EMAIL')
@@ -47,7 +48,7 @@ class EVCharger:
         except Exception as e:
             logger.error(f"Errore generico nell'invio del messaggio Telegram: {e}")
 
-    async def get_battery_percentage(self):
+    async def get_batterystatus(self):
         try:
             async with aiohttp.ClientSession() as websession:
                 client = RenaultClient(websession=websession, locale="it_IT")
@@ -59,8 +60,7 @@ class EVCharger:
                 vin = vehicles.vehicleLinks[0].vin
                 vehicle = await account.get_api_vehicle(vin)
                 battery_status = await vehicle.get_battery_status()
-                battery_level = battery_status.batteryLevel
-                logger.info(f"Livello batteria attuale: {battery_level}%")
+                battery_level = battery_status
                 return battery_level
         except aiohttp.ClientError as e:
             logger.error(f"Errore nel recupero della batteria: {e}")
@@ -97,7 +97,7 @@ class EVCharger:
             logger.error(f"Errore nel recupero dell'ultimo update_id: {e}")
         return None
 
-    async def wait_for_user_response(self, timeout=60):
+    async def wait_for_user_response(self, timeout=300):
         url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getUpdates"
         start_time = time.time()
         last_update_id = await self.get_last_update_id() or 0
@@ -118,15 +118,22 @@ class EVCharger:
         return None
 
     async def ask_continue_charging(self):
-        battery_percentage = await self.get_battery_percentage()
-        await self.send_telegram_message(f"⚡ La ricarica non è necessaria. La batteria è al {battery_percentage} %. Si desidera continuare la ricarica? Rispondi 'sì' o 'no'.")
+        battery_percentage = await self.get_batterystatus()
+        battery_percentage = battery_percentage.batteryLevel
+        target = 0
+        await self.send_telegram_message(f"⚡ La ricarica non è necessaria. La batteria è al {battery_percentage} %. Si desidera continuare la ricarica? Rispondi 'sì','no' o inserisci la cifra della percentuale desiderata.")
         response = await self.wait_for_user_response()
         if response in ["sì", "si"]:
-            await self.send_telegram_message("✅ Continuo la ricarica.")
-            return True
+            await self.send_telegram_message("✅ Continuo la ricarica fino all' 80 %.")
+            target = 80
+            return target
         elif response == "no":
             await self.send_telegram_message("🛑 Ricarica terminata. Si prega di scollegare il veicolo.")
             return False
+        elif isinstance(response, int):
+            await self.send_telegram_message(f"✅ Continuo la ricarica fino all' {response} %.")
+            target = response
+            return target
         else:
             await self.send_telegram_message("⏳ Nessuna risposta valida. Ricarica terminata.")
             return False
@@ -153,10 +160,11 @@ class EVCharger:
             logger.error(f"Errore nello spegnimento della presa: {e}")
             return False
 
-    async def charge_loop(self, battery_percentage, time_estimate):
+    async def charge_loop(self, battery_percentage, time_estimate, target):
         last_battery_percentage = battery_percentage
-        while battery_percentage < 80:
-            battery_percentage = await self.get_battery_percentage()
+        battery_percentage_call = await self.get_batterystatus()
+        battery_percentage = battery_percentage_call.batteryLevel
+        while battery_percentage < target:
             if battery_percentage is None:
                 logger.error("Errore nel recupero del livello batteria durante la ricarica.")
                 break
@@ -172,37 +180,38 @@ class EVCharger:
                 await self.send_telegram_message(f"🔋 Batteria: {battery_percentage}% - Tempo stimato per 80%: {time_estimate // 60} min")
                 last_battery_percentage = battery_percentage
 
-            # Calcola il prossimo intervallo di attesa: più la batteria si avvicina a 80, più frequenti saranno i controlli
-            sleep_time = min(900, time_estimate // max(1, (80 - battery_percentage)))
+            sleep_time = 900
             await asyncio.sleep(sleep_time)
+            battery_percentage = battery_percentage_call.batteryLevel
         await self.stop_charging()
         logger.info("Livello batteria target raggiunto. Ricarica completata.")
         await self.send_telegram_message("✅ Livello batteria target raggiunto. Ricarica completata.")
 
     async def run_charging_cycle(self):
         logger.info("Avvio del ciclo di ricarica.")
-        battery_percentage = await self.get_battery_percentage()
+        battery_percentage = await self.get_batterystatus()
+        battery_percentage = battery_percentage.batteryLevel
         if battery_percentage is None:
             logger.error("Impossibile recuperare il livello della batteria. Interruzione del ciclo.")
             return
 
-        time_estimate = (80 - battery_percentage) * 612
+        time_estimate_call = await self.get_batterystatus()
+        time_estimate = time_estimate_call.chargingRemainingTime
         if battery_percentage >= 50:
             # Quando la batteria è ≥ 50, chiedi se continuare la ricarica
-            if await self.ask_continue_charging():
+            target = await self.ask_continue_charging()
+            if target:
                 await self.start_charging()
-                await self.send_telegram_message(f"Ricarica in corso. Batteria attuale: {battery_percentage}% - Tempo stimato per l'80%: {time_estimate // 60} min")
-                await self.charge_loop(battery_percentage, time_estimate)
+                await self.send_telegram_message(f"Ricarica in corso. Batteria attuale: {battery_percentage}% - Tempo stimato per l'{target}%: {(target*time_estimate)/100} min")
+                await self.charge_loop(battery_percentage, time_estimate, 80)
             else:
-                
                 await self.stop_charging()
-                await self.send_telegram_message("Si prega di scollegare il veicolo. Attendo 2 ore prima di riprovare.")
-                await asyncio.sleep(7200)  # 2 ore
+                await self.send_telegram_message("Si prega di scollegare il veicolo.")
+                await asyncio.sleep((3600)*7)
         elif battery_percentage < 50:
-            
             await self.send_telegram_message(f"Batteria bassa ({battery_percentage}%). Avvio ricarica. Per l' 80%: {time_estimate//60} min")
             if await self.start_charging():
-                await self.charge_loop(battery_percentage, time_estimate)
+                await self.charge_loop(battery_percentage, time_estimate,80)
             else:
                 logger.error("Impossibile avviare la ricarica.")
         else:
