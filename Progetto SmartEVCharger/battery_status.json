@@ -1,0 +1,20 @@
+{
+    "raw_data": {
+        "timestamp": "2025-05-27T18:43:41Z",
+        "batteryLevel": 45,
+        "batteryAutonomy": 103,
+        "plugStatus": 1,
+        "chargingStatus": 0.3,
+        "chargingRemainingTime": 155
+    },
+    "timestamp": "2025-05-27T18:43:41Z",
+    "batteryLevel": 45,
+    "batteryTemperature": null,
+    "batteryAutonomy": 103,
+    "batteryCapacity": null,
+    "batteryAvailableEnergy": null,
+    "plugStatus": 1,
+    "chargingStatus": 0.3,
+    "chargingRemainingTime": 155,
+    "chargingInstantaneousPower": null
+}

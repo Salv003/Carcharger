@@ -1,0 +1,333 @@
+{
+    "raw_data": {
+        "vin": "UU1DBG003PU158919",
+        "registrationDate": "2023-12-14",
+        "firstRegistrationDate": "2023-12-14",
+        "engineType": "4DB",
+        "engineRatio": "403",
+        "modelSCR": "S1E",
+        "passToSalesDate": "2023-07-11",
+        "deliveryCountry": {
+            "code": "IT",
+            "label": "ITALY"
+        },
+        "family": {
+            "code": "XBG",
+            "label": "KWID EV",
+            "group": "007"
+        },
+        "tcu": {
+            "code": "AIVCT",
+            "label": "WITH AIVC CONNECTION UNIT",
+            "group": "E70"
+        },
+        "navigationAssistanceLevel": {},
+        "battery": {
+            "code": "BTDAN",
+            "label": "BTDAN BATTERY",
+            "group": "968"
+        },
+        "radioType": {
+            "code": "RA43D",
+            "label": "ULC4.0",
+            "group": "425"
+        },
+        "registrationCountry": {
+            "code": "IT"
+        },
+        "brand": {
+            "label": "DACIA"
+        },
+        "model": {
+            "code": "XBG1VE",
+            "label": "SPRING",
+            "group": "971"
+        },
+        "gearbox": {
+            "code": "BVEL",
+            "label": "ELEC.VAR.GEARBOX",
+            "group": "427"
+        },
+        "version": {
+            "code": "Z3 M2 B4ER"
+        },
+        "energy": {
+            "code": "ELEC",
+            "label": "ELECTRICITY",
+            "group": "019"
+        },
+        "bodyType": {
+            "code": "BBG",
+            "label": "HATCHBACK FOR XBG",
+            "group": "008"
+        },
+        "steeringSide": {
+            "code": "DG",
+            "label": "LEFT-HAND DRIVE",
+            "group": "027"
+        },
+        "registrationNumber": "GR270FP",
+        "vcd": "STANDA/XBG/BBG/E3/M2/ELEC/DG/TEMP/TR4X2/DA/AFURGE/LIMVIT/ABS/CA01/LAC/VT/ELA/CPE/RET02/2RVLG/SPROJA/NOSDL/RTOL14/CEAVRH/ADAC/AIRBA2/SERIE/DRA/DRAP10/HARM03/ATAR02/SGAV02/SGAR02/OVQPA/BANAL/KM/TPRM3/AVREPL/ABLAVI/ESPHSA/SRDPRO/ALAEVM/M3CA0/PRAMB4/SOPC2C/SKTGRV/COPOR/TRSEV1/RETP03/LVAVEL/LVAREL/KTGREP/ITA01/BRA05/HSTPL/SBR05/RA43D/BVEL/RDIF09/ISOFIX/ENPH02/HRGM01/SANFLT/CHARAP/TL01A/SPRODI/SAN613/AIRBDE/ELC1/SSFLEX/SSLVIT/M2019/PHAS1/SAN913/SSTYAD/SSHYB/26K0B/BTDAN/VEC031/XBG1VE/NB024/4DB/NOLK0/SKTPOU/SKTPGR/NOVTS/FDIU1/MAPOST/RCALL/FACBA1/ECOMOD/NOM2C/AIVCT/NOGSI/ITPK2/EV2GA1/AVARC2/1234Y/AEB00/MPCAR",
+        "manufacturingDate": "2023-07-11",
+        "assets": [
+            {
+                "assetType": "PICTURE",
+                "viewpoint": "mybrand_2",
+                "renditions": [
+                    {
+                        "resolutionType": "ONE_MYRENAULT_SMALL",
+                        "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=RSITE&bookmark=EXT_34_DESSUS&profile=HELIOS_OWNERSERVICES_SMALL_V2"
+                    },
+                    {
+                        "resolutionType": "ONE_MYRENAULT_LARGE",
+                        "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=RSITE&bookmark=EXT_34_DESSUS&profile=HELIOS_OWNERSERVICES_LARGE"
+                    }
+                ],
+                "viewPointInLowerCase": "mybrand_2"
+            },
+            {
+                "assetType": "PICTURE",
+                "viewpoint": "mybrand_5",
+                "renditions": [
+                    {
+                        "resolutionType": "ONE_MYRENAULT_SMALL",
+                        "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=RSITE&bookmark=EXT_34_AV&profile=HELIOS_OWNERSERVICES_SMALL_V2"
+                    },
+                    {
+                        "resolutionType": "ONE_MYRENAULT_LARGE",
+                        "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=RSITE&bookmark=EXT_34_AV&profile=HELIOS_OWNERSERVICES_LARGE"
+                    }
+                ],
+                "viewPointInLowerCase": "mybrand_5"
+            },
+            {
+                "assetType": "PICTURE",
+                "viewpoint": "myb_car_selector",
+                "renditions": [
+                    {
+                        "resolutionType": "ONE_MYRENAULT_SMALL",
+                        "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_RIGHT_SIDE&profile=HELIOS_OWNERSERVICES_SMALL_V2"
+                    },
+                    {
+                        "resolutionType": "ONE_MYRENAULT_LARGE",
+                        "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_RIGHT_SIDE&profile=HELIOS_OWNERSERVICES_LARGE"
+                    }
+                ],
+                "viewPointInLowerCase": "myb_car_selector"
+            },
+            {
+                "assetType": "PICTURE",
+                "viewpoint": "myb_car_page_dashboard",
+                "renditions": [
+                    {
+                        "resolutionType": "ONE_MYRENAULT_SMALL",
+                        "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_LEFT_SIDE&profile=HELIOS_OWNERSERVICES_SMALL_V2"
+                    },
+                    {
+                        "resolutionType": "ONE_MYRENAULT_LARGE",
+                        "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_LEFT_SIDE&profile=HELIOS_OWNERSERVICES_LARGE"
+                    }
+                ],
+                "viewPointInLowerCase": "myb_car_page_dashboard"
+            },
+            {
+                "assetType": "PICTURE",
+                "viewpoint": "myb_program_settings_page",
+                "renditions": [
+                    {
+                        "resolutionType": "ONE_MYRENAULT_SMALL",
+                        "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_LEFT_SIDE&profile=HELIOS_OWNERSERVICES_SMALL_V2"
+                    },
+                    {
+                        "resolutionType": "ONE_MYRENAULT_LARGE",
+                        "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_LEFT_SIDE&profile=HELIOS_OWNERSERVICES_LARGE"
+                    }
+                ],
+                "viewPointInLowerCase": "myb_program_settings_page"
+            },
+            {
+                "assetType": "PICTURE",
+                "viewpoint": "myb_plug_and_charge_activation",
+                "renditions": [
+                    {
+                        "resolutionType": "ONE_MYRENAULT_SMALL",
+                        "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_RIGHT_SIDE&profile=HELIOS_OWNERSERVICES_SMALL_V2"
+                    },
+                    {
+                        "resolutionType": "ONE_MYRENAULT_LARGE",
+                        "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_RIGHT_SIDE&profile=HELIOS_OWNERSERVICES_LARGE"
+                    }
+                ],
+                "viewPointInLowerCase": "myb_plug_and_charge_activation"
+            },
+            {
+                "assetType": "PICTURE",
+                "viewpoint": "myb_plug_and_charge_my_car",
+                "renditions": [
+                    {
+                        "resolutionType": "ONE_MYRENAULT_SMALL",
+                        "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_LEFT_SIDE&profile=HELIOS_OWNERSERVICES_SMALL_V2"
+                    },
+                    {
+                        "resolutionType": "ONE_MYRENAULT_LARGE",
+                        "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_LEFT_SIDE&profile=HELIOS_OWNERSERVICES_LARGE"
+                    }
+                ],
+                "viewPointInLowerCase": "myb_plug_and_charge_my_car"
+            }
+        ],
+        "yearsOfMaintenance": 12,
+        "preferredDealer": {
+            "dealerId": "38013372_001",
+            "dealerName": "SUPERAUTO SPA",
+            "brand": "DACIA",
+            "createdDate": "2024-04-21T19:12:48.422434927Z",
+            "lastModifiedDate": "2024-04-21T19:12:48.422512878Z"
+        },
+        "deliveryDate": "2023-12-18",
+        "retrievedFromDhs": false,
+        "radioCode": "2220",
+        "premiumSubscribed": false,
+        "batteryType": "NMC"
+    },
+    "vin": "UU1DBG003PU158919",
+    "registrationNumber": "GR270FP",
+    "radioCode": "2220",
+    "brand": {
+        "raw_data": {
+            "label": "DACIA"
+        },
+        "code": null,
+        "label": "DACIA",
+        "group": null
+    },
+    "model": {
+        "raw_data": {
+            "code": "XBG1VE",
+            "label": "SPRING",
+            "group": "971"
+        },
+        "code": "XBG1VE",
+        "label": "SPRING",
+        "group": "971"
+    },
+    "energy": {
+        "raw_data": {
+            "code": "ELEC",
+            "label": "ELECTRICITY",
+            "group": "019"
+        },
+        "code": "ELEC",
+        "label": "ELECTRICITY",
+        "group": "019"
+    },
+    "engineEnergyType": null,
+    "assets": [
+        {
+            "assetType": "PICTURE",
+            "viewpoint": "mybrand_2",
+            "renditions": [
+                {
+                    "resolutionType": "ONE_MYRENAULT_SMALL",
+                    "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=RSITE&bookmark=EXT_34_DESSUS&profile=HELIOS_OWNERSERVICES_SMALL_V2"
+                },
+                {
+                    "resolutionType": "ONE_MYRENAULT_LARGE",
+                    "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=RSITE&bookmark=EXT_34_DESSUS&profile=HELIOS_OWNERSERVICES_LARGE"
+                }
+            ],
+            "viewPointInLowerCase": "mybrand_2"
+        },
+        {
+            "assetType": "PICTURE",
+            "viewpoint": "mybrand_5",
+            "renditions": [
+                {
+                    "resolutionType": "ONE_MYRENAULT_SMALL",
+                    "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=RSITE&bookmark=EXT_34_AV&profile=HELIOS_OWNERSERVICES_SMALL_V2"
+                },
+                {
+                    "resolutionType": "ONE_MYRENAULT_LARGE",
+                    "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=RSITE&bookmark=EXT_34_AV&profile=HELIOS_OWNERSERVICES_LARGE"
+                }
+            ],
+            "viewPointInLowerCase": "mybrand_5"
+        },
+        {
+            "assetType": "PICTURE",
+            "viewpoint": "myb_car_selector",
+            "renditions": [
+                {
+                    "resolutionType": "ONE_MYRENAULT_SMALL",
+                    "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_RIGHT_SIDE&profile=HELIOS_OWNERSERVICES_SMALL_V2"
+                },
+                {
+                    "resolutionType": "ONE_MYRENAULT_LARGE",
+                    "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_RIGHT_SIDE&profile=HELIOS_OWNERSERVICES_LARGE"
+                }
+            ],
+            "viewPointInLowerCase": "myb_car_selector"
+        },
+        {
+            "assetType": "PICTURE",
+            "viewpoint": "myb_car_page_dashboard",
+            "renditions": [
+                {
+                    "resolutionType": "ONE_MYRENAULT_SMALL",
+                    "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_LEFT_SIDE&profile=HELIOS_OWNERSERVICES_SMALL_V2"
+                },
+                {
+                    "resolutionType": "ONE_MYRENAULT_LARGE",
+                    "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_LEFT_SIDE&profile=HELIOS_OWNERSERVICES_LARGE"
+                }
+            ],
+            "viewPointInLowerCase": "myb_car_page_dashboard"
+        },
+        {
+            "assetType": "PICTURE",
+            "viewpoint": "myb_program_settings_page",
+            "renditions": [
+                {
+                    "resolutionType": "ONE_MYRENAULT_SMALL",
+                    "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_LEFT_SIDE&profile=HELIOS_OWNERSERVICES_SMALL_V2"
+                },
+                {
+                    "resolutionType": "ONE_MYRENAULT_LARGE",
+                    "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_LEFT_SIDE&profile=HELIOS_OWNERSERVICES_LARGE"
+                }
+            ],
+            "viewPointInLowerCase": "myb_program_settings_page"
+        },
+        {
+            "assetType": "PICTURE",
+            "viewpoint": "myb_plug_and_charge_activation",
+            "renditions": [
+                {
+                    "resolutionType": "ONE_MYRENAULT_SMALL",
+                    "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_RIGHT_SIDE&profile=HELIOS_OWNERSERVICES_SMALL_V2"
+                },
+                {
+                    "resolutionType": "ONE_MYRENAULT_LARGE",
+                    "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_RIGHT_SIDE&profile=HELIOS_OWNERSERVICES_LARGE"
+                }
+            ],
+            "viewPointInLowerCase": "myb_plug_and_charge_activation"
+        },
+        {
+            "assetType": "PICTURE",
+            "viewpoint": "myb_plug_and_charge_my_car",
+            "renditions": [
+                {
+                    "resolutionType": "ONE_MYRENAULT_SMALL",
+                    "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_LEFT_SIDE&profile=HELIOS_OWNERSERVICES_SMALL_V2"
+                },
+                {
+                    "resolutionType": "ONE_MYRENAULT_LARGE",
+                    "url": "https://3dv.renault.com/ImageFromBookmark?configuration=XBG%2FBBG%2FE3%2FLIMVIT%2FCA01%2FRET02%2FDRAP10%2FSGAR02%2FOVQPA%2FESPHSA%2FPRAMB4%2FRETP03%2FLVAREL%2FBRA05%2FRA43D%2FRDIF09%2FENPH02%2FSAN613%2FM2019%2FSAN913%2FRCALL%2FECOMOD%2FITPK2%2FEV2GA1%2FAEB00&databaseId=ef395705-588c-45c2-8294-2948458a7b53&bookmarkSet=CARPICKER&bookmark=EXT_LEFT_SIDE&profile=HELIOS_OWNERSERVICES_LARGE"
+                }
+            ],
+            "viewPointInLowerCase": "myb_plug_and_charge_my_car"
+        }
+    ],
+    "errors": null
+}
