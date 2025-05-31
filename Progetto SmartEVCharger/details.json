@@ -1,6 +1,6 @@
 {
     "raw_data": {
-        "vin": "UU1DBG003PU158919",
+        "vin": "",
         "registrationDate": "2023-12-14",
         "firstRegistrationDate": "2023-12-14",
         "engineType": "4DB",
@@ -66,7 +66,7 @@
             "label": "LEFT-HAND DRIVE",
             "group": "027"
         },
-        "registrationNumber": "GR270FP",
+        "registrationNumber": "",
         "vcd": "STANDA/XBG/BBG/E3/M2/ELEC/DG/TEMP/TR4X2/DA/AFURGE/LIMVIT/ABS/CA01/LAC/VT/ELA/CPE/RET02/2RVLG/SPROJA/NOSDL/RTOL14/CEAVRH/ADAC/AIRBA2/SERIE/DRA/DRAP10/HARM03/ATAR02/SGAV02/SGAR02/OVQPA/BANAL/KM/TPRM3/AVREPL/ABLAVI/ESPHSA/SRDPRO/ALAEVM/M3CA0/PRAMB4/SOPC2C/SKTGRV/COPOR/TRSEV1/RETP03/LVAVEL/LVAREL/KTGREP/ITA01/BRA05/HSTPL/SBR05/RA43D/BVEL/RDIF09/ISOFIX/ENPH02/HRGM01/SANFLT/CHARAP/TL01A/SPRODI/SAN613/AIRBDE/ELC1/SSFLEX/SSLVIT/M2019/PHAS1/SAN913/SSTYAD/SSHYB/26K0B/BTDAN/VEC031/XBG1VE/NB024/4DB/NOLK0/SKTPOU/SKTPGR/NOVTS/FDIU1/MAPOST/RCALL/FACBA1/ECOMOD/NOM2C/AIVCT/NOGSI/ITPK2/EV2GA1/AVARC2/1234Y/AEB00/MPCAR",
         "manufacturingDate": "2023-07-11",
         "assets": [
@@ -190,8 +190,8 @@
         "premiumSubscribed": false,
         "batteryType": "NMC"
     },
-    "vin": "UU1DBG003PU158919",
-    "registrationNumber": "GR270FP",
+    "vin": "",
+    "registrationNumber": "",
     "radioCode": "2220",
     "brand": {
         "raw_data": {
