@@ -1,0 +1,36 @@
+[
+    {
+        "start_time": "2025-06-25T12:52:24.134519",
+        "end_time": "2025-06-25T12:57:24.928499",
+        "start_battery_level": 84,
+        "end_battery_level": 85,
+        "start_battery-capacity": 22.68,
+        "end_battery_capacity": 22.95,
+        "EnergyConsumed": 0.2699999999999996,
+        "battery_autonomy": 182,
+        "charging_duration_hours": 0.17,
+        "energy_expected": 0.27,
+        "energy_measured": 0.22950000000000004,
+        "battery_health_estimate": 85.0,
+        "charging_status": 1.0,
+        "charging_time": 612,
+        "total_mileage": 22750
+    },
+    {
+        "start_time": "2025-06-25T13:49:45.825790",
+        "end_time": "2025-06-25T13:59:58.540600",
+        "start_battery_level": 86,
+        "end_battery_level": 87,
+        "start_battery-capacity": 23.22,
+        "end_battery_capacity": 23.49,
+        "EnergyConsumed": 0.2699999999999996,
+        "battery_autonomy": 187,
+        "charging_duration_hours": 0.17,
+        "energy_expected": 0.27,
+        "energy_measured": 0.22950000000000004,
+        "battery_health_estimate": 85.0,
+        "charging_status": 1.0,
+        "charging_time": 612,
+        "total_mileage": 22750.0
+    }
+]
