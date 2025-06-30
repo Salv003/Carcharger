@@ -127,7 +127,7 @@ class EVCharger:
         elif response == "no":
             await self.send_telegram_message("🛑 Ricarica terminata. Si prega di scollegare il veicolo.")
             return False
-        elif int(response)<=100:
+        elif response != None and int(response)<=100:
             await self.send_telegram_message(f"✅ Continuo la ricarica fino all' {response} %.")
             target = int(response)
             return target
@@ -162,9 +162,10 @@ class EVCharger:
         battery_percentage_call = await self.get_batterystatus()
         start_time = datetime.now().isoformat()
         battery_percentage = battery_percentage_call.batteryLevel
-        charging_time = (target-battery_percentage)*612
+        charging_time = time_estimate*60
         charging_time_real = ((battery_percentage_call.chargingRemainingTime)*(target-battery_percentage)/(100-battery_percentage))*60
         checkpoints = list(range(((first_battery_percentage // 10) + 1) * 10, target, 10))
+        initial_remaining = target-battery_percentage
         while battery_percentage < target:
             if battery_percentage is None:
                 logger.error("Errore nel recupero del livello batteria durante la ricarica.")
@@ -183,14 +184,28 @@ class EVCharger:
                 )
 
             if not checkpoints:
-                remaining_time_sec = charging_time_real
-                logger.info(f"Ultimo sleep per raggiungere il target: {remaining_time_sec // 60} min")
-                await self.send_telegram_message(f"Tempo rimanente per l' {target} % : circa {remaining_time_sec // 60} min ")
-                await asyncio.sleep(remaining_time_sec)                
-
-            estimated_time_sec = charging_time_real*checkpoints[0]/target
-            logger.info(f"Dormo {estimated_time_sec // 60} min fino a circa {checkpoints[0]}%")
-            await asyncio.sleep(estimated_time_sec)
+                current_remaining = target - battery_percentage
+                progress_ratio = current_remaining / initial_remaining
+                
+                exponent = 2  
+                remaining_time_sec = charging_time_real * (progress_ratio ** exponent)
+                
+                
+                min_sleep = 300 
+                max_sleep = 3600  
+                sleep_time = max(min_sleep, min(remaining_time_sec, max_sleep))
+                
+                logger.info(f"Ultimo sleep progressivo: {sleep_time//60} min {sleep_time%60} sec")
+                await self.send_telegram_message(
+                    f"⏳ Progresso: {battery_percentage}% → {target}% | "
+                    f"Prossimo controllo in {sleep_time//60} min {sleep_time%60} sec"
+                )
+            
+                await asyncio.sleep(sleep_time)               
+            else:
+                estimated_time_sec = (charging_time_real*(checkpoints[0]-battery_percentage))/(target-battery_percentage)
+                logger.info(f"Dormo {estimated_time_sec // 60} min fino a circa {checkpoints[0]}%")
+                await asyncio.sleep(estimated_time_sec)
             battery_percentage_call = await self.get_batterystatus()
             battery_percentage = battery_percentage_call.batteryLevel
             charging_time_real = ((battery_percentage_call.chargingRemainingTime)*(target-battery_percentage)/(100-battery_percentage))*60
@@ -262,7 +277,8 @@ class EVCharger:
                 await self.send_telegram_message("Si prega di scollegare il veicolo. Attendo 7 ore prima di riprovare")
                 await asyncio.sleep(3600*7)
         elif battery_percentage < 50:
-            await self.send_telegram_message(f"Batteria bassa ({battery_percentage}%). Avvio ricarica. Per l' {target} %: {time_estimate} min")
+            time_estimate = round(((80-battery_percentage)*612)/60)
+            await self.send_telegram_message(f"Batteria bassa ({battery_percentage}%). Avvio ricarica. Per l' {80} %: {time_estimate} min")
             if await self.start_charging():
                 await self.charge_loop(battery_percentage, time_estimate,80)
             else:
@@ -281,18 +297,27 @@ class EVCharger:
                 await self.run_charging_cycle()
             else:
                 logger.warning("⚠️ Cavo scollegato!")
-            await asyncio.sleep(900)  
+            await asyncio.sleep(900)
+
+    async def close(self):
+        if self.websession:
+            await self.websession.close()  
 
 if __name__ == "__main__":
     async def main():
-        charger = EVCharger()
-        await charger.setup()
-        remaining_call = await charger.vehicle.get_battery_status()
-        battery = remaining_call.batteryLevel
-        remaining = round(remaining_call.chargingRemainingTime*(80-battery)/(100-battery))*60
-        print(remaining)
-        await charger.monitor_plug_status()
-        
+        try:
+            charger = EVCharger()
+            await charger.setup()
+            remaining_call = await charger.vehicle.get_battery_status()
+            battery = remaining_call.batteryLevel
+            remaining = round(remaining_call.chargingRemainingTime*(80-battery)/(100-battery))*60
+            print(remaining_call.chargingRemainingTime)
+            print(remaining_call.chargingInstantaneousPower)
+            print(remaining)
+            await charger.monitor_plug_status()
+        finally:
+            await charger.close()
+            print("errore sessione terminata")        
     try:
         import sys
         if sys.platform.startswith("win"):
