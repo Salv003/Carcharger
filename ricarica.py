@@ -185,11 +185,7 @@ class EVCharger:
                 await self.send_telegram_message(
                     f"🔋 Batteria: {battery_percentage}% - Prossimo checkpoint {checkpoints[0] if checkpoints else target}%"
                 )
-    
-                estimated_time_sec = (charging_time_real*(checkpoints[0]-battery_percentage))/(target-battery_percentage)
-                logger.info(f"Dormo {estimated_time_sec // 60} min fino a circa {checkpoints[0]}%")
-                await asyncio.sleep(estimated_time_sec)
-            else:
+            elif not checkpoints:
                 
                 current_remaining = target - battery_percentage
                 progress_ratio = current_remaining / initial_remaining
@@ -208,6 +204,10 @@ class EVCharger:
                 )
                 
                 await asyncio.sleep(sleep_time)
+            else:
+                estimated_time_sec = (charging_time_real*(checkpoints[0]-battery_percentage))/(target-battery_percentage)
+                logger.info(f"Dormo {estimated_time_sec // 60} min fino a circa {checkpoints[0]}%")
+                await asyncio.sleep(estimated_time_sec)
             
         
             battery_percentage_call = await self.get_batterystatus()
