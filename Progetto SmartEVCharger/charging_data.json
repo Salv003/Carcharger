@@ -32,5 +32,22 @@
         "charging_status": 1.0,
         "charging_time": 612,
         "total_mileage": 22750.0
+    },
+    {
+        "start_time": "2025-07-01T23:57:25.034753",
+        "end_time": "2025-07-02T00:49:33.620963",
+        "start_battery_level": 51,
+        "end_battery_level": 55,
+        "start_battery-capacity": 13.77,
+        "end_battery_capacity": 14.85,
+        "EnergyConsumed": 1.08,
+        "battery_autonomy": 96,
+        "charging_duration_hours": 0.0,
+        "energy_expected": 1.08,
+        "energy_measured": 0.0,
+        "battery_health_estimate": null,
+        "charging_status": 1.0,
+        "charging_time": 2460,
+        "total_mileage": 22989.0
     }
 ]
