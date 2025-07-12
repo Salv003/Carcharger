@@ -46,17 +46,13 @@ class EVCharger:
         self.TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
         self.TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
         self.TELEGRAM_CHAT_ID1 = os.getenv("TELEGRAM_CHAT_ID1")
+        self.last_known_battery_status = None
 
         if not all([self.tapo_email, self.tapo_password, self.smart_plug_ip,
                    self.renault_email, self.renault_password]):
             raise ValueError("Errore: alcune credenziali non sono state caricate correttamente.")
 
     async def send_telegram_message(self, message, force=False):
-        """
-        Invia messaggi Telegram.
-        Se force=False, limita la frequenza delle notifiche per evitare spam.
-        """
-        # Controllo semplice: manda messaggi solo se force=True o messaggio contiene parole chiave importanti
         important_keywords = ["⚠️", "✅", "🛑", "⚡", "Ricarica terminata", "cavo scollegato"]
         if not force and not any(k in message for k in important_keywords):
             # Skip messaggi non critici per evitare spam
@@ -113,17 +109,21 @@ class EVCharger:
             except Exception as e:
                 logger.warning(f"Tentativo {attempt+1} fallito per {func.__name__}: {e}")
                 if attempt < max_retries - 1:
-                    await asyncio.sleep(2 ** attempt)  # Backoff esponenziale
+                    await asyncio.sleep(2 ** attempt)
         
         logger.error(f"Chiamata API {func.__name__} fallita dopo {max_retries} tentativi")
         return None
 
     async def get_batterystatus(self):
-        return await self.safe_api_call(self.vehicle.get_battery_status)
+        status = await self.safe_api_call(self.vehicle.get_battery_status)
+        if status:
+            self.last_known_battery_status = status
+        return status
 
     async def get_plug_status(self):
         status = await self.safe_api_call(self.vehicle.get_battery_status)
         if status:
+            self.last_known_battery_status = status
             is_plugged = status.plugStatus != 0
             logger.info(f"Stato cavo: {'Collegato' if is_plugged else 'Scollegato'}")
             return is_plugged
@@ -287,7 +287,7 @@ class EVCharger:
                 battery_status = await self.get_batterystatus()
                 if battery_status is None:
                     break
-                new_battery_percentage = battery_status.batterylevel
+                new_battery_percentage = battery_status.batteryLevel
             
                 # Adatto la stima tempo ricarica
                 if new_battery_percentage <= battery_percentage:
@@ -302,7 +302,8 @@ class EVCharger:
             end_time = datetime.now().isoformat()
             end_status = await self.get_batterystatus()
             if not end_status:
-                logger.error("Errore nel recupero dello stato finale della batteria.")
+                logger.warning("Usando ultimo stato batteria noto per salvataggio")
+                end_status = self.last_known_battery_status
                 return
             start_battery_capacity = (first_battery_percentage*27)/100
             end_battery_capacity = (end_status.batteryLevel*27)/100
@@ -310,7 +311,7 @@ class EVCharger:
             charging_duration_hours = (charging_time_real) / 3600
             energy_expected = (end_status.batteryLevel - first_battery_percentage) * 27 / 100
             energy_measured = charging_duration_hours * 1.35
-            battery_health = (energy_expected / energy_measured) * 100 if energy_expected > 0 else None
+            battery_health = (energy_measured / energy_expected) * 100 if energy_expected > 0 else None
             cockpit = await self.vehicle.get_cockpit()
             total_mileage_value = cockpit.totalMileage
             
