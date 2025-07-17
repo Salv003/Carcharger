@@ -309,9 +309,9 @@ class EVCharger:
             end_battery_capacity = (end_status.batteryLevel*27)/100
             energy_consumed = round(end_battery_capacity - start_battery_capacity, 2)
             charging_duration_hours = (charging_time_real) / 3600
-            energy_expected = (end_status.batteryLevel - first_battery_percentage) * 27 / 100
+            energy_expected = (end_status.batteryLevel - first_battery_percentage)/ 100
             energy_measured = charging_duration_hours * 1.35
-            battery_health = (energy_measured / energy_expected) * 100 if energy_expected > 0 else None
+            battery_health = ((energy_measured / energy_expected)/27) * 100 if energy_expected > 0 else None
             cockpit = await self.vehicle.get_cockpit()
             total_mileage_value = cockpit.totalMileage
             
