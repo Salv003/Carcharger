@@ -47,7 +47,7 @@ def generate_valid_session(start_time, mileage, health=90, reverse=False):
         "end_time": end_time.isoformat(),
         "start_battery_level": start_battery_level,
         "end_battery_level": end_battery_level,
-        "start_battery-capacity": round(start_capacity, 2),
+        "start_battery_capacity": round(start_capacity, 2),
         "end_battery_capacity": round(end_capacity, 2),
         "EnergyConsumed": round(energy_consumed, 2),
         "battery_autonomy": autonomy,
@@ -58,8 +58,6 @@ def generate_valid_session(start_time, mileage, health=90, reverse=False):
         "charging_status": float(random.choice([0.0, 1.0])),
         "charging_time": int(duration_hours * 3600),
         "total_mileage": round(mileage, 1),
-        "target_reached": random.choice([True, False]),
-        "cable_disconnected_during": random.choice([True, False])
     }, mileage, end_time
 
 # === GENERA SESSIONI PRIMA DI UNA DATA ===
