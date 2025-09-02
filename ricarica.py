@@ -309,7 +309,7 @@ class EVCharger:
             start_battery_capacity = (first_battery_percentage*27)/100
             end_battery_capacity = (end_status.batteryLevel*27)/100
             energy_consumed = round(end_battery_capacity - start_battery_capacity, 2)
-            charging_duration_hours = (charging_time_real) / 3600
+            charging_duration_hours = (charging_time_real_start) / 3600
             energy_expected = (end_status.batteryLevel - first_battery_percentage)/ 100
             energy_measured = charging_duration_hours * 1.35
             battery_health = ((energy_measured / energy_expected)/27) * 100 if energy_expected > 0 else None
@@ -368,14 +368,14 @@ class EVCharger:
                 await self.send_telegram_message("Si prega di scollegare il veicolo. Attendo 7 ore prima di riprovare.", force=True)
                 await asyncio.sleep(3600*7)
                 return
-            time_estimate = round(((target - battery_percentage) * 612) / 60)
+            time_estimate = round(((battery_status.chargingRemainingTime)*(target-battery_percentage)/(100-battery_percentage)))
             await self.start_charging()
             await self.send_telegram_message(f"Ricarica in corso. Batteria attuale: {battery_percentage}% - Tempo stimato per {target}%: {time_estimate} min", force=True)
             await self.charge_loop(battery_percentage, time_estimate, target)
 
         elif battery_percentage < 50:
             target = 80
-            time_estimate = round(((target - battery_percentage) * 612) / 60)
+            time_estimate = round(((battery_status.chargingRemainingTime)*(target-battery_percentage)/(100-battery_percentage)))
             await self.send_telegram_message(f"Batteria bassa ({battery_percentage}%). Avvio ricarica fino all'80%: {time_estimate} min", force=True)
             if await self.start_charging():
                 await self.charge_loop(battery_percentage, time_estimate, target)
@@ -421,4 +421,5 @@ if __name__ == "__main__":
         asyncio.run(main())
     except Exception as e:
         logger.error(f"Errore durante l'esecuzione dello script: {e}")
+
 
