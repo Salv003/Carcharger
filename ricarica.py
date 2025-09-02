@@ -230,6 +230,7 @@ class EVCharger:
         start_time = datetime.now().isoformat()
         battery_percentage = battery_status.batteryLevel
         charging_time_real = ((battery_status.chargingRemainingTime)*(target-battery_percentage)/(100-battery_percentage))*60
+        charging_time_real_start = ((battery_status.chargingRemainingTime)*(target-battery_percentage)/(100-battery_percentage))*60
         checkpoints = list(range(((first_battery_percentage // 10) + 1) * 10, target, 10))
         initial_remaining = target-battery_percentage
         
@@ -420,3 +421,4 @@ if __name__ == "__main__":
         asyncio.run(main())
     except Exception as e:
         logger.error(f"Errore durante l'esecuzione dello script: {e}")
+
